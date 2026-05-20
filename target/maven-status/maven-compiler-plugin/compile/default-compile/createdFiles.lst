@@ -1,0 +1,14 @@
+com\javacore\common\exception\ResourceNotFoundException.class
+com\javacore\demo\service\ItemService.class
+com\javacore\common\dto\ApiError.class
+com\javacore\demo\dto\ItemResponse.class
+com\javacore\demo\dto\ItemRequest.class
+com\javacore\JavaCoreApplication.class
+com\javacore\demo\controller\ItemController.class
+com\javacore\common\exception\GlobalExceptionHandler.class
+com\javacore\demo\entity\Item$ItemBuilder.class
+com\javacore\demo\entity\Item.class
+com\javacore\demo\repository\ItemRepository.class
+com\javacore\config\SecurityConfig.class
+com\javacore\demo\controller\HealthController.class
+com\javacore\config\DataInitializer.class

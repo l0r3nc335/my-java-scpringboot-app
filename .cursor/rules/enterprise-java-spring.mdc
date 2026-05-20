@@ -1,0 +1,46 @@
+---
+description: Enterprise Spring Boot conventions for JAVA_CORE
+alwaysApply: true
+---
+
+# Enterprise Java + Spring Boot
+
+## Architecture
+
+- Use layered packages: `controller` → `service` → `repository`; entities stay in `entity/`, API contracts in `dto/`.
+- Controllers are thin: validate input, delegate to services, return DTOs — no business logic or direct repository access.
+- Prefer **constructor injection** (`@RequiredArgsConstructor` + `final` fields). Avoid field `@Autowired`.
+
+## Services & transactions
+
+- Place `@Transactional` on the **service** layer, not controllers or repositories.
+- Use `readOnly = true` for query-only methods.
+
+## DTOs vs entities
+
+- Never expose JPA entities from REST endpoints. Map entity ↔ DTO in the service layer.
+- Use records for immutable DTOs when appropriate.
+
+## Configuration & secrets
+
+- Use `application.yml` with Spring profiles (`application-dev.yml`, `application-prod.yml`).
+- Never commit secrets, API keys, or production credentials. Use env vars or a secret manager.
+
+## Logging
+
+- Use SLF4J (`private static final Logger log = LoggerFactory.getLogger(...)`).
+- Log business events at INFO; log exceptions at ERROR with context, not stack traces in responses.
+
+```java
+// BAD — logic in controller
+@GetMapping("/{id}")
+public Item get(@PathVariable Long id) {
+  return itemRepository.findById(id).orElseThrow();
+}
+
+// GOOD — delegate to service, return DTO
+@GetMapping("/{id}")
+public ItemResponse get(@PathVariable Long id) {
+  return itemService.findById(id);
+}
+```

@@ -1,0 +1,13 @@
+C:\Users\loren\OneDrive\Documents\development\JAVA\JAVA_CORE\src\main\java\com\javacore\common\dto\ApiError.java
+C:\Users\loren\OneDrive\Documents\development\JAVA\JAVA_CORE\src\main\java\com\javacore\common\exception\GlobalExceptionHandler.java
+C:\Users\loren\OneDrive\Documents\development\JAVA\JAVA_CORE\src\main\java\com\javacore\common\exception\ResourceNotFoundException.java
+C:\Users\loren\OneDrive\Documents\development\JAVA\JAVA_CORE\src\main\java\com\javacore\config\DataInitializer.java
+C:\Users\loren\OneDrive\Documents\development\JAVA\JAVA_CORE\src\main\java\com\javacore\config\SecurityConfig.java
+C:\Users\loren\OneDrive\Documents\development\JAVA\JAVA_CORE\src\main\java\com\javacore\demo\controller\HealthController.java
+C:\Users\loren\OneDrive\Documents\development\JAVA\JAVA_CORE\src\main\java\com\javacore\demo\controller\ItemController.java
+C:\Users\loren\OneDrive\Documents\development\JAVA\JAVA_CORE\src\main\java\com\javacore\demo\dto\ItemRequest.java
+C:\Users\loren\OneDrive\Documents\development\JAVA\JAVA_CORE\src\main\java\com\javacore\demo\dto\ItemResponse.java
+C:\Users\loren\OneDrive\Documents\development\JAVA\JAVA_CORE\src\main\java\com\javacore\demo\entity\Item.java
+C:\Users\loren\OneDrive\Documents\development\JAVA\JAVA_CORE\src\main\java\com\javacore\demo\repository\ItemRepository.java
+C:\Users\loren\OneDrive\Documents\development\JAVA\JAVA_CORE\src\main\java\com\javacore\demo\service\ItemService.java
+C:\Users\loren\OneDrive\Documents\development\JAVA\JAVA_CORE\src\main\java\com\javacore\JavaCoreApplication.java

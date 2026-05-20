@@ -1,0 +1,38 @@
+---
+description: Testing conventions for Spring Boot
+globs: "**/*Test.java,**/test/**"
+alwaysApply: false
+---
+
+# Testing Conventions
+
+## Test pyramid
+
+| Layer | Annotation | Scope |
+|-------|------------|-------|
+| Controller | `@WebMvcTest` | MVC slice, mock services |
+| Repository | `@DataJpaTest` | JPA + in-memory DB |
+| Service | plain unit + Mockito | No Spring context |
+| Integration | `@SpringBootTest` | Full context — use sparingly |
+
+## Practices
+
+- Use JUnit 5 (`@Test`, `@DisplayName`).
+- Prefer `@MockitoBean` / `@MockBean` over manual mocks for Spring tests.
+- For `@WebMvcTest`, disable security filters when testing non-auth logic: `@AutoConfigureMockMvc(addFilters = false)`.
+- Assert HTTP status, JSON body, and headers — not implementation details.
+
+## Integration tests
+
+- Use **Testcontainers** for PostgreSQL/MySQL integration tests against real databases.
+- Do not rely on H2-specific SQL in tests meant to validate production behavior.
+
+```java
+// GOOD — focused controller test
+@WebMvcTest(controllers = ItemController.class)
+@AutoConfigureMockMvc(addFilters = false)
+class ItemControllerTest {
+  @MockitoBean ItemService itemService;
+  // mockMvc.perform(...).andExpect(...)
+}
+```

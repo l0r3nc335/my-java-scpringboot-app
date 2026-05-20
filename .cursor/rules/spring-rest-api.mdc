@@ -1,0 +1,47 @@
+---
+description: REST API conventions for Spring controllers and DTOs
+globs: "**/*Controller.java,**/dto/**"
+alwaysApply: false
+---
+
+# REST API Conventions
+
+## URLs & versioning
+
+- Prefix public APIs with `/api/v1/`.
+- Use plural nouns: `/api/v1/items`, not `/api/v1/item`.
+- Use path variables for resource IDs; query params for filters/pagination.
+
+## HTTP semantics
+
+| Action | Method | Status |
+|--------|--------|--------|
+| Create | POST | 201 Created + `Location` header |
+| Read | GET | 200 OK |
+| Update | PUT/PATCH | 200 OK |
+| Delete | DELETE | 204 No Content |
+| Not found | — | 404 via `ResourceNotFoundException` |
+| Validation error | — | 400 via `@Valid` + `@ControllerAdvice` |
+
+## Request validation
+
+- Annotate request bodies with `@Valid`.
+- Use Jakarta Bean Validation on DTOs (`@NotBlank`, `@NotNull`, `@Size`, `@Email`).
+
+```java
+// BAD — no validation, returns entity
+@PostMapping
+public Item create(@RequestBody Item item) { ... }
+
+// GOOD
+@PostMapping
+public ResponseEntity<ItemResponse> create(@Valid @RequestBody ItemRequest request) {
+  var created = itemService.create(request);
+  return ResponseEntity.created(URI.create("/api/v1/items/" + created.id())).body(created);
+}
+```
+
+## Error responses
+
+- Use a consistent error body (e.g. `ApiError` record) from `@RestControllerAdvice`.
+- Do not leak internal exception messages or stack traces to clients.

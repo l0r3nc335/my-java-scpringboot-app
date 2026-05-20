@@ -1,0 +1,41 @@
+---
+description: JPA and repository conventions
+globs: "**/entity/**,**/repository/**"
+alwaysApply: false
+---
+
+# Persistence Conventions
+
+## Entities
+
+- Keep entities in `entity/` package; annotate with `@Entity`, `@Table`.
+- Use `@Id` + `@GeneratedValue(strategy = GenerationType.IDENTITY)` for surrogate keys.
+- Avoid bidirectional associations unless required; prefer unidirectional `@ManyToOne`.
+
+## Repositories
+
+- Extend `JpaRepository<Entity, Id>` — no custom impl unless query logic is complex.
+- Name methods with Spring Data conventions: `findByEmail`, `existsByName`.
+- For complex queries, use `@Query` or Specifications — not ad-hoc JPQL in services.
+
+## Performance
+
+- Do not call `findAll()` on large tables in request paths; use pagination (`Pageable`).
+- Avoid N+1: use `JOIN FETCH` or `@EntityGraph` where needed.
+- Never return lazy-loaded associations outside a transaction.
+
+## DTO boundary
+
+- Map entities to DTOs in the service layer before returning from APIs.
+
+## Production schema
+
+- Use **Flyway** or **Liquibase** for production migrations; avoid `ddl-auto: update` in prod.
+
+```java
+// BAD — exposing entity, unbounded query
+List<Item> findAll();
+
+// GOOD — paginated, returns DTOs from service
+Page<ItemResponse> findAll(Pageable pageable);
+```
